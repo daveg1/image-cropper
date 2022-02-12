@@ -10,6 +10,10 @@ window.onload = e => {
   const canvas = document.getElementById('image-space')
   const ctx = canvas.getContext('2d')
 
+  document.getElementById('upload').onclick = e => {
+    fileUpload.click()
+  }
+
   // Selection events
   window.onmousedown = e => {
     if (e.target !== canvas) {

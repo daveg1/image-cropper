@@ -77,18 +77,18 @@ form.onsubmit = e => {
   const width = data.get('width')
   const height = data.get('height')
 
-  if (width > source.width) {
-    console.warn('Greater than width')
+  // Invalid width
+  if (width > source.width || width <= 0) {
     return
   }
 
-  if (height > source.height) {
-    console.warn('Greater than height')
+  // Invalid height
+  if (height > source.height || height <= 0) {
     return
   }
 
+  // Out of bounds
   if (left < 0 || top < 0) {
-    console.warn('out of bounds')
     return
   }
 

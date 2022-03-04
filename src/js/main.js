@@ -1,7 +1,13 @@
+import Editor from './Editor'
+import CropRegion from './CropRegion'
+import SourceImage from './SourceImage'
 
-// TODO image class to hold image bitmap data and metadata
+// TODO live updates from crop form
+
 window.onload = e => {
   'use strict';
+
+  customElements.define(CropRegion.htmlName, CropRegion)
 
   const uploadInput = document.getElementById('upload-input')
   const uploadButton = document.getElementById('upload-button')
@@ -14,17 +20,16 @@ window.onload = e => {
   const canvas = document.querySelector('canvas')
   const context = canvas.getContext('2d')
 
-  let source = null
-  let display = null
+  const editor = new Editor(cropRegion)
 
   function updateCanvas() {
-    canvas.setAttribute('width', source.width)
-    canvas.setAttribute('height', source.height)
+    canvas.setAttribute('width', editor.source.width)
+    canvas.setAttribute('height', editor.source.height)
   
-    context.drawImage(source, 0, 0)
+    context.drawImage(editor.source.data, 0, 0)
   
     // What the user sees
-    display = {
+    editor.display = {
       width: canvas.offsetWidth,
       height: canvas.offsetHeight
     }
@@ -35,48 +40,29 @@ window.onload = e => {
   })
 
   uploadInput.addEventListener('input', async function(e) {
-    source = await createImageBitmap(this.files[0])
-  
-    document.querySelector('#width').textContent = source.width
-    document.querySelector('#height').textContent = source.height
-  
+    const file = this.files[0]
+    
+    editor.source = new SourceImage(file, await createImageBitmap(file))
+
+    document.querySelector('#width').textContent = editor.source.width
+    document.querySelector('#height').textContent = editor.source.height
+
+    cropForm.reset()
+
     updateCanvas()
   })
 
-  function download(x, y, w, h) {
-    const canvasTemp = document.createElement('canvas')
-    const ctx = canvasTemp.getContext('2d')
-  
-    canvasTemp.setAttribute('width', w)
-    canvasTemp.setAttribute('height', h)
-  
-    const region = [x, y, w, h]
-    ctx.drawImage(source, ...region, 0, 0, w, h)
-  
-    canvasTemp.toBlob(blob => {
-      const url = URL.createObjectURL(blob)
-      const link = document.createElement('a')
-      link.href = url
-      link.download = `${uploadInput.files[0].name.split('.').shift()}-crop.png`
-      link.click()
-      URL.revokeObjectURL(url)
-    })
-  }
-  
-  function crop(x, y, w, h) {
-    x = (x / source.width) * display.width
-    y = (y / source.height) * display.height
-    w = (w / source.width) * display.width
-    h = (h / source.height) * display.height
-  
-    cropRegion.style.cssText = `
-    width: ${w}px;
-    height: ${h}px;
-    transform: translate(${x}px, ${y}px)
-    `
-  }
+  downloadButton.addEventListener('click', e => {
+    editor.downloadCrop()
+  })
 
-  function getCropDimensions() {
+  cropForm.addEventListener('submit', function(e) {
+    e.preventDefault()
+  
+    if (!editor.source) {
+      return
+    }
+
     const data = new FormData(cropForm)
 
     const top = data.get('top')
@@ -84,43 +70,6 @@ window.onload = e => {
     const width = data.get('width')
     const height = data.get('height')
 
-    return { top, left, width, height }
-  }
-
-  downloadButton.addEventListener('click', e => {
-    const { left, top, width, height } = getCropDimensions()
-
-    download(left, top, width, height)
-  })
-
-  cropForm.addEventListener('submit', function(e) {
-    e.preventDefault()
-  
-    if (!source) {
-      return
-    }
-  
-    const { left, top, width, height } = getCropDimensions()
-  
-    // Invalid width
-    if (width > source.width || width <= 0) {
-      return
-    }
-  
-    // Invalid height
-    if (height > source.height || height <= 0) {
-      return
-    }
-  
-    // Out of bounds
-    if (left < 0 || top < 0) {
-      return
-    }
-  
-    if (e.submitter.id === 'download-button') {
-      download(left, top, width, height)
-    } else {
-      crop(left, top, width, height)
-    }
+    editor.crop(left, top, width, height)
   })
 }

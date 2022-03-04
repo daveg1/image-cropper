@@ -15,6 +15,10 @@
     @apply transition-colors hover:bg-indigo-400;
   }
 
+  .button--icon {
+    @apply flex items-center justify-center gap-1;
+  }
+
   .input {
     @apply py-2 px-3 bg-white border border-slate-300 rounded outline-none;
     @apply transition-all hover:border-indigo-400 focus:border-indigo-500 focus:ring focus:ring-indigo-200;
@@ -23,9 +27,4 @@
   .canvas {
     @apply block max-w-5xl bg-slate-50 shadow-lg shadow-slate-400;
   }
-}
-
-#crop-region {
-  background-color: rgba(200,0,0,0.5);
-  position: absolute;
 }

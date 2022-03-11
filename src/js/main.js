@@ -2,6 +2,8 @@ import Editor from './Editor'
 import CropRegion from './CropRegion'
 import SourceImage from './SourceImage'
 
+// TODO move canvas to Editor
+// TODO move update canvas to Editor
 // TODO live updates from crop form
 
 window.onload = e => {
@@ -41,8 +43,12 @@ window.onload = e => {
 
   uploadInput.addEventListener('input', async function(e) {
     const file = this.files[0]
-    
-    editor.source = new SourceImage(file, await createImageBitmap(file))
+
+    if (!editor.source) {
+      document.querySelector('#file-details').classList.remove('hidden')
+    }
+
+    editor.source = new SourceImage(file, await window.createImageBitmap(file))
 
     document.querySelector('#width').textContent = editor.source.width
     document.querySelector('#height').textContent = editor.source.height

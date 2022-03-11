@@ -40,14 +40,14 @@ class CropRegion extends HTMLElement {
   }
 
   crop(x,y,w,h) {
+    this.#region = { x, y, w, h }
+
     // Scale points to proportion of source image.
     x = (x / this.#source.width)  * this.#display.width
     y = (y / this.#source.height) * this.#display.height
     w = (w / this.#source.width)  * this.#display.width
     h = (h / this.#source.height) * this.#display.height
 
-    this.#region = { x, y, w, h }
-  
     this.style.cssText = `
     width: ${w}px;
     height: ${h}px;

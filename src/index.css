@@ -7,24 +7,59 @@
   body {
     @apply h-full;
   }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
 }
 
 @layer components {
   .button {
-    @apply py-2 font-semibold text-white bg-indigo-500 rounded;
-    @apply transition-colors hover:bg-indigo-400;
+    @apply
+    py-2
+    px-4
+    bg-indigo-500
+    font-semibold
+    text-white
+    rounded
+    transition-colors
+    hover:bg-indigo-400;
   }
 
   .button--icon {
-    @apply flex items-center justify-center gap-1;
+    @apply
+    flex
+    items-center
+    justify-center
+    gap-1;
   }
 
   .input {
-    @apply py-2 px-3 bg-white border border-slate-300 rounded outline-none;
-    @apply transition-all hover:border-indigo-400 focus:border-indigo-500 focus:ring focus:ring-indigo-200;
+    @apply
+    max-w-full
+    py-2
+    px-4
+    bg-slate-100
+    outline-none
+    rounded
+    transition-all
+    hover:border-indigo-400
+    focus:bg-slate-200;
   }
 
   .canvas {
-    @apply block max-w-5xl bg-slate-50 shadow-lg shadow-slate-400;
+    @apply
+    block
+    max-w-5xl
+    bg-slate-50
+    shadow-lg
+    shadow-slate-400;
   }
 }

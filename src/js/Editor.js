@@ -1,6 +1,9 @@
 class Editor {
   #source = null
   #display = null
+
+  #canvas = null
+  #context = null
   #cropRegion = null
 
   get source() {
@@ -24,8 +27,23 @@ class Editor {
     this.#cropRegion.display = value
   }
 
-  constructor(cropRegion) {
+  constructor(canvas, cropRegion) {
+    this.#canvas = canvas;
+    this.#context = canvas.getContext('2d')
     this.#cropRegion = cropRegion
+  }
+
+  updateCanvas() {
+    this.#canvas.setAttribute('width', this.#source.width)
+    this.#canvas.setAttribute('height', this.#source.height)
+
+    this.#context.drawImage(this.#source.data, 0, 0)
+
+    // What the user sees
+    this.display = {
+      width: this.#canvas.offsetWidth,
+      height: this.#canvas.offsetHeight
+    }
   }
 
   crop(x,y,w,h) {
@@ -56,10 +74,10 @@ class Editor {
     const canvasTemp = document.createElement('canvas')
     const ctx = canvasTemp.getContext('2d')
     const { x, y, w, h } = this.#cropRegion.region
-  
+
     canvasTemp.setAttribute('width', w)
     canvasTemp.setAttribute('height', h)
-  
+
     const region = [x,y,w,h]
     const destination = [0,0,w,h]
 

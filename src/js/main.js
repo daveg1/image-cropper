@@ -17,25 +17,11 @@ window.onload = e => {
   const downloadButton = document.getElementById('download-button')
 
   const cropForm = document.querySelector('#crop-form')
+
   const cropRegion = document.querySelector('#crop-region')
-
   const canvas = document.querySelector('canvas')
-  const context = canvas.getContext('2d')
 
-  const editor = new Editor(cropRegion)
-
-  function updateCanvas() {
-    canvas.setAttribute('width', editor.source.width)
-    canvas.setAttribute('height', editor.source.height)
-  
-    context.drawImage(editor.source.data, 0, 0)
-  
-    // What the user sees
-    editor.display = {
-      width: canvas.offsetWidth,
-      height: canvas.offsetHeight
-    }
-  }
+  const editor = new Editor(canvas, cropRegion)
 
   uploadButton.addEventListener('click', e => {
     uploadInput.click()
@@ -55,14 +41,15 @@ window.onload = e => {
 
     cropForm.reset()
 
-    updateCanvas()
+    editor.updateCanvas()
   })
 
   downloadButton.addEventListener('click', e => {
     editor.downloadCrop()
   })
 
-  cropForm.addEventListener('submit', function(e) {
+  // cropForm.addEventListener('submit', function(e) {
+  cropForm.addEventListener('input', function(e) {
     e.preventDefault()
   
     if (!editor.source) {

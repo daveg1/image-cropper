@@ -3,25 +3,59 @@ import './index.css'
 
 window.onload = e => {
   const filename = document.querySelector('#filename')
-  const area = document.querySelector('#area')
+  const fileArea = document.querySelector('#file-area')
+  const cropArea = document.querySelector('#crop-area')
+  const dropAreaOverlay = document.querySelector('#file-drop-overlay')
   const canvas = document.querySelector('#canvas')
   const cropButton = document.querySelector('#crop')
   const downloadButton = document.querySelector('#download')
+  const fileButton = document.querySelector('#file-button')
+  const fileInput = document.querySelector('#file')
 
   const c = canvas.getContext('2d')
   const drawArea = initDrawArea()
-  let img = loadImage()
-
   const origin = {}
+
+  let img
   let dims = null
   let isSelecting = false
 
   // Events
-  area.addEventListener('pointerdown', handleCropStart)
   window.addEventListener('pointermove', handleCropMove)
   window.addEventListener('pointerup', handleCropEnd)
+  window.addEventListener('dragenter', e => {
+    dropAreaOverlay.classList.replace('hidden', 'grid')
+  })
+  dropAreaOverlay.addEventListener('dragleave', e => {
+    dropAreaOverlay.classList.replace('grid', 'hidden')
+  })
+  window.addEventListener('dragover', e => e.preventDefault())
+  window.addEventListener('drop', e => {
+    e.preventDefault()
+    handleFile(e.dataTransfer.files[0])
+
+  })
+  cropArea.addEventListener('pointerdown', handleCropStart)
   cropButton.addEventListener('click', crop)
   downloadButton.addEventListener('click', download)
+  fileButton.addEventListener('click', e => {
+    fileInput.click()
+  })
+  fileInput.addEventListener('change', e => {
+    if (fileInput.files.length) {
+      handleFile(fileInput.files[0])
+    }
+  })
+
+  async function handleFile(file) {
+    img = await createImageBitmap(file)
+    loadImage(img)
+    filename.textContent = file.name
+    filename.contentEditable = 'true'
+
+    fileArea.remove()
+    cropArea.classList.remove('hidden')
+  }
 
   function handleCropStart(e) {
     origin.x = e.clientX
@@ -34,7 +68,7 @@ window.onload = e => {
       return
     }
 
-    const bounds = area.getBoundingClientRect()
+    const bounds = cropArea.getBoundingClientRect()
     const lx = Math.floor(Math.min(Math.max(origin.x, e.clientX), bounds.right) - bounds.x)
     const ly = Math.floor(Math.min(Math.max(origin.y, e.clientY), bounds.bottom) - bounds.y)
     const ox = Math.floor(Math.max(Math.min(origin.x, e.clientX), bounds.left) - bounds.x)
@@ -94,21 +128,13 @@ window.onload = e => {
   function initDrawArea() {
     const div = document.createElement('div')
     div.id = 'draw-area'
-    area.append(div)
+    cropArea.append(div)
     return div
   }
 
-  function loadImage() {
-    const img = new Image()
-    img.src = imgURL
-
-    img.onload = (e) => {
-      canvas.height = img.naturalHeight
-      canvas.width = img.naturalWidth
-      c.drawImage(img, 0, 0)
-      filename.textContent = (img.src.split('/').pop())
-      filename.contentEditable = 'true'
-    }
-    return img
+  function loadImage(img) {
+    canvas.height = img.height
+    canvas.width = img.width
+    c.drawImage(img, 0, 0)
   }
 }

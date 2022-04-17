@@ -4,6 +4,7 @@ An image cropping tool for the web.
 ## Todo
 - [x] Style interface
 - [x] Add cropping & download
+- [ ] Add number inputs
 - [ ] Add drag selection
 - [ ] Add crop preview
 - [ ] Add canvas panning

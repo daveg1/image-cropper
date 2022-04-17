@@ -2,64 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  html,
-  body {
-    @apply h-full;
-  }
-
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  /* Firefox */
-  input[type=number] {
-    -moz-appearance: textfield;
-  }
-}
-
 @layer components {
-  .button {
+  #draw-area {
     @apply
-    py-2
-    px-4
-    bg-indigo-500
-    font-semibold
-    text-white
-    rounded
-    transition-colors
-    hover:bg-indigo-400;
+    box-border
+    absolute
+    left-0
+    top-0
+    bg-blue-400/50
+    border
+    border-blue-400
+    pointer-events-none;
   }
 
-  .button--icon {
-    @apply
-    flex
-    items-center
-    justify-center
-    gap-1;
-  }
-
-  .input {
-    @apply
-    max-w-full
-    py-2
-    px-4
-    bg-slate-100
-    outline-none
-    rounded
-    transition-all
-    hover:border-indigo-400
-    focus:bg-slate-200;
-  }
-
-  .canvas {
-    @apply
-    block
-    max-w-5xl
-    bg-slate-50
-    shadow-lg
-    shadow-slate-400;
+  #draw-area:not([style]) {
+    @apply hidden;
   }
 }

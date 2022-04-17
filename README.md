@@ -1,10 +1,12 @@
 # Image Cropper
-A canvas-based image cropping tool built with web components and ES6, styled with tailwindcss and bundled with webpack.
-
-Currently W.I.P.
+An image cropping tool for the web.
 
 ## Todo
-1. ~~Style with tailwind~~
-1. Add mouse crop selection functionality
-1. Move selection
-1. Zoom image
+- [x] Style interface
+- [x] Add cropping & download
+- [ ] Add drag selection
+- [ ] Add crop preview
+- [ ] Add canvas panning
+
+## References
+1. [Contenteditable focus](https://stackoverflow.com/questions/34354085/clicking-outside-a-contenteditable-div-stills-give-focus-to-it)

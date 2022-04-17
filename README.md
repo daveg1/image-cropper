@@ -12,3 +12,4 @@ An image cropping tool for the web.
 
 ## References
 1. [contentEditable focus](https://stackoverflow.com/questions/34354085/clicking-outside-a-contenteditable-div-stills-give-focus-to-it)
+1. [vite github pages](https://vitejs.dev/guide/static-deploy.html#github-pages)

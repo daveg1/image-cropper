@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Image Cropper</title>
-  <script type="module" crossorigin src="/image-cropper/assets/index.a7d089e4.js"></script>
+  <script type="module" crossorigin src="/image-cropper/assets/index.9ee8fa64.js"></script>
   <link rel="stylesheet" href="/image-cropper/assets/index.8b046cab.css">
 </head>
 <body class="h-full bg-zinc-800 text-zinc-200">
@@ -22,12 +22,14 @@
     </div>
   </div>
 
+  <!-- File Drop Area -->
+  <div id="file-drop-overlay" class="hidden fixed inset-0 z-50 bg-black/80 text-4xl select-none open:grid open:place-content-center">
+    <p class="pointer-events-none">Drop file to upload</p>
+  </div>
+
   <div class="h-full grid place-content-center overflow-hidden">
     <!-- File Area -->
     <div id="file-area" class="p-8 flex flex-col items-center gap-4 border-2 border-dashed border-zinc-600 rounded">
-      <div id="file-drop-overlay" class="hidden fixed inset-0 z-50 bg-black/80 text-4xl select-none open:grid open:place-content-center">
-        <p class="pointer-events-none">Drop file to upload</p>
-      </div>
       <svg class="h-12 w-12 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
       </svg>

@@ -19,7 +19,6 @@ export function crop(img, dims) {
   const destination = [0,0,w,h]
 
   ctx.drawImage(img, ...region, ...destination)
-  drawArea.removeAttribute('style')
 }
 
 export function download(filename='crop.jpg') {
@@ -27,7 +26,6 @@ export function download(filename='crop.jpg') {
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
     link.href = url
-    // link.download = filename.textContent.trim() ?? 'crop.jpg'
     link.download = filename
     link.click()
     URL.revokeObjectURL(url)

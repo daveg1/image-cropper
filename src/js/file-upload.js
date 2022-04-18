@@ -34,11 +34,20 @@ fileInput.addEventListener('change', function(e) {
 // File drag'n'drop overlay
 const fileDropOverlay = getElem('#file-drop-overlay')
 
-window.addEventListener('dragenter', e => fileDropOverlay.setAttribute('open', ''))
-fileDropOverlay.addEventListener('dragleave', e => fileDropOverlay.removeAttribute('open'))
+function openOverlay() {
+  fileDropOverlay.setAttribute('open', '')
+}
+
+function closeOverlay() {
+  fileDropOverlay.removeAttribute('open')
+}
+
+window.addEventListener('dragenter', openOverlay)
 window.addEventListener('dragover', e => e.preventDefault()) // Stop file opening in new tab
+fileDropOverlay.addEventListener('dragleave', closeOverlay)
 
 window.addEventListener('drop', e => {
   e.preventDefault()
   handleFile(e.dataTransfer.files[0])
+  closeOverlay()
 })

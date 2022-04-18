@@ -29,7 +29,7 @@ window.addEventListener('pointermove', e => {
   const bx = ox
   const by = oy
 
-  // Scale
+  // Points to scale
   const sx = Math.floor(bounds.width) / canvas.width
   const sy = Math.floor(bounds.height) / canvas.height
 

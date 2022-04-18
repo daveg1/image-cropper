@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  #draw-area {
+    @apply
+    box-border
+    absolute
+    left-0
+    top-0
+    bg-blue-400/50
+    border
+    border-blue-400
+    pointer-events-none;
+  }
+
+  #draw-area:not([style]) {
+    @apply hidden;
+  }
+}

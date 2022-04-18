@@ -1,8 +1,5 @@
-import './index.css'
-
-import './js/file-upload.js'
-
-window._app = {}
+import './css/index.css'
+import './js/index.js'
 
 /*
 const filename = document.querySelector('#filename')

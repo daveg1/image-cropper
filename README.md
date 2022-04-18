@@ -9,6 +9,7 @@ An image cropping tool for the web.
 - [ ] Add drag selection
 - [ ] Add crop preview
 - [ ] Add canvas panning
+- [ ] Preserve metadata
 
 ## References
 1. [contentEditable focus](https://stackoverflow.com/questions/34354085/clicking-outside-a-contenteditable-div-stills-give-focus-to-it)

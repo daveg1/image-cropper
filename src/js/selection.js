@@ -1,5 +1,5 @@
-import { getElem } from "./utils"
-import { canvas } from "./canvas"
+import { getElem } from './utils'
+import { canvas } from './canvas'
 
 const cropArea = getElem('#crop-area')
 const selection = getElem('#selection')

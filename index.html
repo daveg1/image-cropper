@@ -8,10 +8,10 @@
 </head>
 <body class="h-full bg-zinc-800 text-zinc-200">
 
-  <div class="w-full fixed top-0 flex justify-center py-4 bg-zinc-900">
+  <div class="w-full fixed top-0 z-40 flex justify-center py-4 bg-zinc-900">
     <div class="max-w-3xl w-full flex">
       <div class="mr-auto inline-block">
-        <div id="filename" contenteditable class="px-3 py-1 bg-zinc-800 rounded outline-none focus:ring focus:ring-blue-400" value="Image Cropper"></div>
+        <div id="file-title" class="px-3 py-1 bg-zinc-800 rounded outline-none focus:ring focus:ring-blue-400">Image Cropper</div>
       </div>
       <div class="flex gap-2">
         <button id="crop" class="h-8 px-4 bg-blue-400 rounded font-bold text-zinc-800 text-sm cursor-pointer hover:bg-blue-300 active:bg-blue-400/80">Crop</button>
@@ -21,17 +21,19 @@
   </div>
 
   <div class="h-full grid place-content-center overflow-hidden">
+    <!-- File Area -->
     <div id="file-area" class="p-8 flex flex-col items-center gap-4 border-2 border-dashed border-zinc-600 rounded">
-      <div id="file-drop-overlay" class="hidden fixed inset-0 z-50 place-content-center bg-black/80 text-4xl">
-        <p>Drop file to upload</p>
+      <div id="file-drop-overlay" class="hidden fixed inset-0 z-50 bg-black/80 text-4xl select-none open:grid open:place-content-center">
+        <p class="pointer-events-none">Drop file to upload</p>
       </div>
       <svg class="h-12 w-12 opacity-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
       </svg>
       <div>Drop file to upload or <button id="file-button" class="text-blue-400 underline hover:text-blue-300">browse</button></div>
-      <input id="file" type="file" name="file" class="sr-only" accept="image/*">
+      <input id="file-input" type="file" class="sr-only" accept="image/*">
     </div>
 
+    <!-- Crop Area -->
     <div id="crop-area" class="hidden relative cursor-crosshair" draggable="false">
       <canvas id="canvas" class="block max-w-3xl"></canvas>
     </div>

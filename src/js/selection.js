@@ -1,14 +1,20 @@
-let dims = {}
-let isSelecting = false
+import { getElem } from "./utils"
+import { canvas } from "./canvas"
 
-function handleCropStart(e) {
+const cropArea = getElem('#crop-area')
+const selection = getElem('#selection')
+const origin = {}
+
+// Selection start
+cropArea.addEventListener('pointerdown', e => {
   origin.x = e.clientX
   origin.y = e.clientY
-  isSelecting = true
-}
+  selection.setAttribute('selecting', '')
+})
 
-function handleCropMove(e) {
-  if (!isSelecting) {
+// Selection move
+window.addEventListener('pointermove', e => {
+  if (!selection.hasAttribute('selecting')) {
     return
   }
 
@@ -27,20 +33,21 @@ function handleCropMove(e) {
   const sx = Math.floor(bounds.width) / canvas.width
   const sy = Math.floor(bounds.height) / canvas.height
 
-  dims = {
+  _app.dims = {
     x: bx / sx,
     y: by / sy,
     w: w / sx,
     h: h / sy,
   }
 
-  drawArea.style.cssText = `
+  selection.style.cssText = `
     transform: translate(${bx}px, ${by}px);
     width: ${w}px;
     height: ${h}px;
   `
-}
+})
 
-function handleCropEnd(e) {
-  isSelecting = false
-}
+// Selection end
+window.addEventListener('pointerup', e => {
+  selection.removeAttribute('selecting')
+})

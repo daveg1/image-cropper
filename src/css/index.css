@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer components {
-  #draw-area {
+  #selection {
     @apply
     box-border
     absolute
@@ -15,7 +15,7 @@
     pointer-events-none;
   }
 
-  #draw-area:not([style]) {
+  #selection:not([style]) {
     @apply hidden;
   }
 }
